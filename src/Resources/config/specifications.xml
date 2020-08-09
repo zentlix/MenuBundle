@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <service id="zentlix_menu.exist_entity_specification"
+                 class="Zentlix\MenuBundle\Domain\Menu\Specification\ExistEntitySpecification">
+            <argument type="service" id="translator"/>
+        </service>
+        <service id="zentlix_menu.exist_item_specification"
+                 class="Zentlix\MenuBundle\Domain\Menu\Specification\ExistItemSpecification">
+            <argument type="service" id="Zentlix\MenuBundle\Domain\Menu\Repository\ItemRepository"/>
+            <argument type="service" id="translator"/>
+        </service>
+        <service id="zentlix_menu.exist_menu_specification"
+                 class="Zentlix\MenuBundle\Domain\Menu\Specification\ExistMenuSpecification">
+            <argument type="service" id="Zentlix\MenuBundle\Domain\Menu\Repository\MenuRepository"/>
+            <argument type="service" id="translator"/>
+        </service>
+        <service id="zentlix_menu.unique_code_specification"
+                 class="Zentlix\MenuBundle\Domain\Menu\Specification\UniqueCodeSpecification">
+            <argument type="service" id="Zentlix\MenuBundle\Domain\Menu\Repository\MenuRepository"/>
+            <argument type="service" id="translator"/>
+        </service>
+    </services>
+</container>

@@ -1,0 +1,9 @@
+doctrine:
+  orm:
+    auto_mapping: true
+    mappings:
+      Menu:
+        is_bundle: false
+        type: annotation
+        dir: '%kernel.project_dir%/vendor/zentlix/menu-bundle/src/Domain/Menu/Entity'
+        prefix: Zentlix\MenuBundle\Domain\Menu\Entity

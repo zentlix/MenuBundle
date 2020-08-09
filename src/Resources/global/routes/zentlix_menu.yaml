@@ -1,0 +1,2 @@
+zentlix_block:
+  resource: '@MenuBundle/Resources/config/routing.xml'

@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<routes xmlns="http://symfony.com/schema/routing"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://symfony.com/schema/routing
+        https://symfony.com/schema/routing/routing-1.0.xsd">
+
+    <route id="admin.menu.list" path="/backend/settings/menu/list">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_menu.controller.admin.menu_controller::index</default>
+    </route>
+    <route id="admin.menu.create" path="/backend/settings/menu/create">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_menu.controller.admin.menu_controller::create</default>
+    </route>
+    <route id="admin.menu.update" path="/backend/settings/menu/{id}/edit">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_menu.controller.admin.menu_controller::update</default>
+    </route>
+    <route id="admin.menu.delete" path="/backend/settings/menu/{id}/delete">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_menu.controller.admin.menu_controller::delete</default>
+    </route>
+
+    <route id="admin.menu_item.create" path="/backend/settings/menu/item/{id}/create">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_menu.controller.admin.item_controller::create</default>
+    </route>
+    <route id="admin.menu_item.update" path="/backend/settings/menu/item/{id}/edit">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_menu.controller.admin.item_controller::update</default>
+    </route>
+    <route id="admin.menu_item.delete" path="/backend/settings/menu/item/{id}/delete">
+        <condition>request.isXmlHttpRequest()</condition>
+        <default key="_controller">zentlix_menu.controller.admin.item_controller::delete</default>
+    </route>
+</routes>

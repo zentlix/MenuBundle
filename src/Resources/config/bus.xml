@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<container xmlns="http://symfony.com/schema/dic/services"
+           xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+           xsi:schemaLocation="http://symfony.com/schema/dic/services
+        http://symfony.com/schema/dic/services/services-1.0.xsd">
+
+    <services>
+        <defaults public="false"/>
+
+        <!-- Command bus -->
+        <service id="zentlix_menu.item.create_handler" class="Zentlix\MenuBundle\Application\Command\Item\CreateHandler">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="zentlix_menu.exist_menu_specification"/>
+            <argument type="service" id="zentlix_menu.exist_item_specification"/>
+            <argument type="service" id="zentlix_menu.exist_entity_specification"/>
+            <argument type="service" id="Zentlix\MenuBundle\Domain\Menu\Repository\ItemRepository"/>
+            <argument type="service" id="zentlix_menu.service.providers"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+        <service id="zentlix_menu.item.delete_handler" class="Zentlix\MenuBundle\Application\Command\Item\DeleteHandler">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+        <service id="zentlix_menu.item.update_handler" class="Zentlix\MenuBundle\Application\Command\Item\UpdateHandler">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="zentlix_menu.exist_menu_specification"/>
+            <argument type="service" id="zentlix_menu.exist_item_specification"/>
+            <argument type="service" id="zentlix_menu.exist_entity_specification"/>
+            <argument type="service" id="Zentlix\MenuBundle\Domain\Menu\Repository\ItemRepository"/>
+            <argument type="service" id="zentlix_menu.service.providers"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+
+        <service id="zentlix_menu.menu.create_handler" class="Zentlix\MenuBundle\Application\Command\Menu\CreateHandler">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="zentlix_menu.unique_code_specification"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+        <service id="zentlix_menu.menu.delete_handler" class="Zentlix\MenuBundle\Application\Command\Menu\DeleteHandler">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+        <service id="zentlix_menu.menu.update_handler" class="Zentlix\MenuBundle\Application\Command\Menu\UpdateHandler">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="event_dispatcher"/>
+            <argument type="service" id="zentlix_menu.unique_code_specification"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+
+
+        <!-- Query bus -->
+        <service id="zentlix_menu.menu_data_table_query_handler" class="Zentlix\MenuBundle\Application\Query\Menu\DataTableQueryHandler">
+            <argument type="service" id="zentlix_main.data_table_service"/>
+            <tag name="messenger.message_handler"/>
+        </service>
+    </services>
+</container>
