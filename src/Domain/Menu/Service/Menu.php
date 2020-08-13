@@ -60,7 +60,7 @@ class Menu
 
     public function getMenuTree(string $code): ?array
     {
-        $menu = $this->menuRepository->findOneByCode($code);
+        $menu = $this->getCachedMenu($code);
 
         if(is_null($menu)) {
             return null;
@@ -80,5 +80,22 @@ class Menu
         };
 
         return $build($this->itemRepository->buildTree($result));
+    }
+
+    public function getCachedMenu(string $code): ?MenuEntity
+    {
+        $menu = Cache::getMenu($code);
+
+        if(is_null($menu)) {
+            $menu = $this->menuRepository->findOneByCode($code);
+        }
+
+        if(is_null($menu)) {
+            return null;
+        }
+
+        Cache::setMenu($code, $menu);
+
+        return $menu;
     }
 }

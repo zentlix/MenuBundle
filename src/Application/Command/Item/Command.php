@@ -34,8 +34,9 @@ class Command extends DynamicPropertyCommand implements CommandInterface
 
     public ?string $url;
     public int $sort = 1;
-    public ?bool $is_category = false;
-    public ?int $depth = 1;
+    public bool $is_category = false;
+    public bool $blank = false;
+    public int $depth = 1;
     public ?int $entity_id;
     /** @var Providers */
     public Providers $providers;
@@ -57,8 +58,9 @@ class Command extends DynamicPropertyCommand implements CommandInterface
                 $this->providers->getDefaultProvider()->getType());
             $this->sort = (int) $request->request->get('sort', $item ? $item->getSort() : 1);
             $this->url = $request->request->get('url', $item ? $item->getUrl() : null);
-            $this->is_category = $request->request->get('is_category', $item ? $item->isCategory() : false);
-            $this->depth = $request->request->get('depth', $item ? $item->getDepth() : 1);
+            $this->is_category = (bool) $request->request->get('is_category', $item ? $item->isCategory() : false);
+            $this->blank = (bool) $request->request->get('blank', $item ? $item->isTargetBlank() : false);
+            $this->depth = (int) $request->request->get('depth', $item ? $item->getDepth() : 1);
             $this->parent = (int) $request->request->get('parent', $parent ? $parent->getId() : null);
             $this->title = $request->request->get('title', $item ? $item->getTitle() : null);
 

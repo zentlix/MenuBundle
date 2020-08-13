@@ -40,6 +40,7 @@ class DeleteHandler implements CommandHandlerInterface
             $this->entityManager->remove($item);
         }
 
+        Cache::clearMenu($command->menu->getCode());
         Cache::clearMenuTree($command->menu->getCode());
 
         $this->entityManager->remove($command->menu);

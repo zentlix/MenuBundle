@@ -39,3 +39,7 @@ This bundle is part of Zentlix CMS. Currently in development, please do not use 
     menu:
       main_menu: "menu/main.html.twig"
 ```
+- Для вывода заголовка меню используется виджет:
+```twig
+    {{ menuTitleWidget('symbol_code') }}
+```

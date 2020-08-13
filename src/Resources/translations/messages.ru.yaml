@@ -44,4 +44,5 @@ zentlix_menu:
 
   not_exist:          "Меню c id %s не найдено."
   provider_not_found: "Провайдер меню с id %s не найден."
+  target_blank:       "Открывать в новой вкладке"
   view:               "Просмотр меню"

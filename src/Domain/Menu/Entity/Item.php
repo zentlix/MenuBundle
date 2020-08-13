@@ -50,6 +50,9 @@ class Item implements Eventable
     /** @Mapping\Column(type="integer", options={"default": 1}) */
     private $depth;
 
+    /** @Mapping\Column(type="boolean", options={"default": 0}) */
+    private $blank;
+
     /**
      * @var Menu
      * @Mapping\ManyToOne(targetEntity="Menu", inversedBy="items")
@@ -158,6 +161,11 @@ class Item implements Eventable
         return $this->provider;
     }
 
+    public function isTargetBlank(): bool
+    {
+        return $this->blank;
+    }
+
     public function asArray(): array
     {
         return [
@@ -165,6 +173,7 @@ class Item implements Eventable
             'url'         => $this->url,
             'sort'        => $this->sort,
             'is_category' => $this->is_category,
+            'blank'       => $this->blank,
             'depth'       => $this->depth,
             'entity_id'   => $this->entity_id,
             'menu_id'     => $this->menu->getId(),
@@ -182,6 +191,7 @@ class Item implements Eventable
         $this->url = $command->url;
         $this->sort = $command->sort;
         $this->is_category = $command->is_category;
+        $this->blank = $command->blank;
         $this->depth = $command->depth;
         $this->entity_id = $command->entity_id;
         $this->menu = $command->getMenu();

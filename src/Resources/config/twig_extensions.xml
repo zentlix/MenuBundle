@@ -9,5 +9,10 @@
             <argument type="string">%menu_template%</argument>
             <tag name="twig.extension"/>
         </service>
+
+        <service id="zentlix_menu.twig_extension.menu_title" class="Zentlix\MenuBundle\UI\Http\Web\Widget\MenuTitle">
+            <argument type="service" id="zentlix_menu.service.menu"/>
+            <tag name="twig.extension"/>
+        </service>
     </services>
 </container>

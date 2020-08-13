@@ -17,6 +17,7 @@ use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Zentlix\MainBundle\Application\Command\CommandHandlerInterface;
 use Zentlix\MenuBundle\Domain\Menu\Event\Menu\BeforeUpdate;
 use Zentlix\MenuBundle\Domain\Menu\Event\Menu\AfterUpdate;
+use Zentlix\MenuBundle\Domain\Menu\Service\Cache;
 use Zentlix\MenuBundle\Domain\Menu\Specification\UniqueCodeSpecification;
 
 class UpdateHandler implements CommandHandlerInterface
@@ -46,6 +47,8 @@ class UpdateHandler implements CommandHandlerInterface
 
         $menu->update($command);
         $this->entityManager->flush();
+
+        Cache::clearMenu($menu->getCode());
 
         $this->eventDispatcher->dispatch(new AfterUpdate($menu, $command));
     }

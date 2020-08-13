@@ -15,7 +15,6 @@ namespace Zentlix\MenuBundle\UI\Http\Web\Widget;
 use Twig\Extension\AbstractExtension;
 use Twig\Environment;
 use Twig\TwigFunction;
-use Zentlix\MainBundle\Domain\Site\Entity\Template;
 use Zentlix\MainBundle\Domain\Site\Service\Sites;
 use Zentlix\MenuBundle\Domain\Menu\Service\Cache;
 use Zentlix\MenuBundle\Domain\Menu\Service\Menu as MenuService;
@@ -23,14 +22,14 @@ use Zentlix\MenuBundle\Domain\Menu\Service\Menu as MenuService;
 class Menu extends AbstractExtension
 {
     private MenuService $menu;
-    private Template $template;
+    private Sites $sites;
     private string $defaultTemplate;
 
     public function __construct(MenuService $menu, Sites $sites, string $template)
     {
         $this->menu = $menu;
-        $this->template = $sites->getCurrentSite()->getTemplate();
         $this->defaultTemplate = $template;
+        $this->sites = $sites;
     }
 
     public function getFunctions(): array
@@ -53,9 +52,10 @@ class Menu extends AbstractExtension
             return null;
         }
 
-        $templateFile = $this->template->getConfigParam(sprintf('menu.%s', $template));
+        $siteTemplate = $this->sites->getCurrentSite()->getTemplate();
+        $templateFile = $siteTemplate->getConfigParam(sprintf('menu.%s', $template));
         if($templateFile) {
-            $templateFile = $this->template->getFolder() . '/' . $templateFile;
+            $templateFile = $siteTemplate->getFolder() . '/' . $templateFile;
         }
 
         return $twig->render($templateFile ?: $this->defaultTemplate, [

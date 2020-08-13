@@ -88,6 +88,9 @@ class Form extends AbstractForm
             'label'    => 'zentlix_menu.item.parent',
             'required' => false
         ]);
+        $builder->add('blank', Type\CheckboxType::class, [
+            'label' => 'zentlix_menu.target_blank'
+        ]);
 
         if($command->is_category) {
             $builder->add('depth', Type\IntegerType::class, [

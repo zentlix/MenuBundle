@@ -1,16 +1,18 @@
 {% macro menu_item(item) %}
-    <li><a href="{{ item.url }}">{{ item.title }}</a></li>
-    {% if(item['__children'] is defined) %}
-        {% for children in item['__children'] %}
+    <li>
+        <a href="{{ item.url }}" {% if(item['blank']) %}target="_blank"{% endif %}>{{ item.title }}</a>
+        {% if(item['__children'] | length > 0) %}
             <ul>
-                {{ _self.menu_item(children) }}
+                {% for children in item['__children'] %}
+                    {{ _self.menu_item(children) }}
+                {% endfor %}
             </ul>
-        {% endfor %}
-    {% endif %}
+        {% endif %}
+    </li>
 {% endmacro %}
 
-{% for item in menu %}
-    <ul>
+<ul>
+    {% for item in menu %}
         {{ _self.menu_item(item) }}
-    </ul>
-{% endfor %}
+    {% endfor %}
+</ul>
