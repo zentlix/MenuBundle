@@ -29,7 +29,7 @@ class MenuBundle extends Bundle implements ZentlixBundleInterface
 
     public function getVersion(): string
     {
-        return '0.2.0';
+        return '0.2.1';
     }
 
     public function getDeveloper(): array

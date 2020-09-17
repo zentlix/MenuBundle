@@ -2,7 +2,7 @@ doctrine:
   orm:
     auto_mapping: true
     mappings:
-      Menu:
+      zentlix_menu_menu:
         is_bundle: false
         type: annotation
         dir: '%kernel.project_dir%/vendor/zentlix/menu-bundle/src/Domain/Menu/Entity'

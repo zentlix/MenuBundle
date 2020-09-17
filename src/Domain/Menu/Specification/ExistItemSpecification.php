@@ -14,10 +14,10 @@ namespace Zentlix\MenuBundle\Domain\Menu\Specification;
 
 use Symfony\Contracts\Translation\TranslatorInterface;
 use Zentlix\MainBundle\Application\Query\NotFoundException;
-use Zentlix\MainBundle\Domain\Shared\Specification\AbstractSpecification;
 use Zentlix\MenuBundle\Domain\Menu\Repository\ItemRepository;
+use function is_null;
 
-final class ExistItemSpecification extends AbstractSpecification
+final class ExistItemSpecification
 {
     private ItemRepository $itemRepository;
     private TranslatorInterface $translator;
@@ -28,22 +28,15 @@ final class ExistItemSpecification extends AbstractSpecification
         $this->translator = $translator;
     }
 
-    public function isExist(int $id): bool
+    public function isExist(int $id): void
     {
-        return $this->isSatisfiedBy($id);
-    }
-
-    public function isSatisfiedBy($value): bool
-    {
-        if($this->itemRepository->find($value) === null) {
-            throw new NotFoundException(sprintf($this->translator->trans('zentlix_menu.item.not_exist'), $value));
+        if(is_null($this->itemRepository->find($id))) {
+            throw new NotFoundException(sprintf($this->translator->trans('zentlix_menu.item.not_exist'), $id));
         }
-
-        return true;
     }
 
-    public function __invoke(int $id)
+    public function __invoke(int $id): void
     {
-        return $this->isExist($id);
+        $this->isExist($id);
     }
 }

@@ -14,10 +14,9 @@ namespace Zentlix\MenuBundle\Domain\Menu\Specification;
 
 use Doctrine\ORM\NonUniqueResultException;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Zentlix\MainBundle\Domain\Shared\Specification\AbstractSpecification;
 use Zentlix\MenuBundle\Domain\Menu\Repository\MenuRepository;
 
-final class UniqueCodeSpecification extends AbstractSpecification
+final class UniqueCodeSpecification
 {
     private MenuRepository $menuRepository;
     private TranslatorInterface $translator;
@@ -28,22 +27,15 @@ final class UniqueCodeSpecification extends AbstractSpecification
         $this->translator = $translator;
     }
 
-    public function isUnique(string $code): bool
+    public function isUnique(string $code): void
     {
-        return $this->isSatisfiedBy($code);
-    }
-
-    public function isSatisfiedBy($value): bool
-    {
-        if($this->menuRepository->findOneByCode($value)) {
+        if($this->menuRepository->hasByCode($code)) {
             throw new NonUniqueResultException($this->translator->trans('zentlix_menu.already_exist'));
         }
-
-        return true;
     }
 
-    public function __invoke(string $code)
+    public function __invoke(string $code): void
     {
-        return $this->isUnique($code);
+        $this->isUnique($code);
     }
 }

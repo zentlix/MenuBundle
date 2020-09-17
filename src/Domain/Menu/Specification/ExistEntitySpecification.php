@@ -14,10 +14,10 @@ namespace Zentlix\MenuBundle\Domain\Menu\Specification;
 
 use Doctrine\Persistence\ObjectRepository;
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Zentlix\MainBundle\Domain\Shared\Specification\AbstractSpecification;
 use Zentlix\MainBundle\Application\Query\NotFoundException;
+use function is_null;
 
-final class ExistEntitySpecification extends AbstractSpecification
+final class ExistEntitySpecification
 {
     private TranslatorInterface $translator;
 
@@ -26,25 +26,15 @@ final class ExistEntitySpecification extends AbstractSpecification
         $this->translator = $translator;
     }
 
-    public function isExist(ObjectRepository $repository, int $id): bool
+    public function isExist(ObjectRepository $repository, int $id): void
     {
-        return $this->isSatisfiedBy(['repository' => $repository, 'id' => $id]);
-    }
-
-    public function isSatisfiedBy($value): bool
-    {
-        $repository = $value['repository'];
-
-        /** @var ObjectRepository $repository */
-        if($repository->find($value['id']) === null) {
-            throw new NotFoundException(sprintf($this->translator->trans('zentlix_menu.entity_not_found'), $value['id']));
+        if(is_null($repository->find($id))) {
+            throw new NotFoundException(sprintf($this->translator->trans('zentlix_menu.entity_not_found'), $id));
         }
-
-        return true;
     }
 
-    public function __invoke(ObjectRepository $repository, int $id)
+    public function __invoke(ObjectRepository $repository, int $id): void
     {
-        return $this->isExist($repository, $id);
+        $this->isExist($repository, $id);
     }
 }
