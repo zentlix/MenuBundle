@@ -12,6 +12,8 @@ declare(strict_types=1);
 
 namespace Zentlix\MenuBundle\Domain\Menu\Service;
 
+use Zentlix\MenuBundle\Infrastructure\Menu\Service\ProviderInterface;
+
 class Providers
 {
     private array $providers = [];
@@ -42,18 +44,8 @@ class Providers
         return $this->providers[$type];
     }
 
-    public function isEntityProvider(string $type): bool
+    public function getProviders(): array
     {
-        return $this->getProviderByType($type) instanceof MenuEntityProviderInterface;
-    }
-
-    public function assoc(): array
-    {
-        $providers = array_map(fn(ProviderInterface $provider) => [
-            'type' => $provider->getType(),
-            'title' => $provider->getTitle()
-        ], $this->providers);
-
-        return array_column($providers, 'type', 'title');
+        return $this->providers;
     }
 }

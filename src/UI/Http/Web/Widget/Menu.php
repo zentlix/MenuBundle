@@ -18,6 +18,7 @@ use Twig\TwigFunction;
 use Zentlix\MainBundle\Domain\Site\Service\Sites;
 use Zentlix\MenuBundle\Domain\Menu\Service\Cache;
 use Zentlix\MenuBundle\Domain\Menu\Service\Menu as MenuService;
+use function is_null;
 
 class Menu extends AbstractExtension
 {
@@ -35,7 +36,7 @@ class Menu extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('menuWidget', [$this, 'getMenu'], ['needs_environment' => true, 'is_safe' => ['html']]),
+            new TwigFunction('menu_widget', [$this, 'getMenu'], ['needs_environment' => true, 'is_safe' => ['html']]),
         ];
     }
 

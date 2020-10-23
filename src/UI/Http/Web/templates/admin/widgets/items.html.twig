@@ -1,0 +1,24 @@
+<div class="accordion menu-item-wrapper" id="menu-items" role="tablist">
+    {% for item in items %}
+        <div class="menu-item" {% if item.level > 1 %}style="margin-left: {{ 20 * (item.level - 1) }}px" {% endif %}>
+            <div class="" id="heading-{{ item.id }}">
+                <div class="menu-title">
+                    <a data-toggle="collapse" href="#item-{{ item.id }}" aria-expanded="true" aria-controls="item-{{ item.id }}" role="button" class="accordion-toggle">
+                        {{ item.title | trans }}
+                        <span class="menu-controls float-right">
+                            <span class="menu-type">{{ providers.providerByType(item.provider).title | trans }}</span>
+                            <i class="c-icon c-icon-2xl cil-chevron-bottom"></i>
+                        </span>
+                    </a>
+                </div>
+            </div>
+            <div class="collapse menu-item-form" id="item-{{ item.id }}" aria-labelledby="heading-{{ item.id }}" data-parent="#menu-items">
+                <div class="">
+                    {% autoescape %}
+                        {{ providers.providerByType(item.provider).updateForm(item) | raw }}
+                    {% endautoescape %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

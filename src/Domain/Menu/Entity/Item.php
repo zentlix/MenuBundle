@@ -16,8 +16,8 @@ use Doctrine\ORM\Mapping;
 use Gedmo\Mapping\Annotation;
 use Zentlix\MainBundle\Domain\Shared\Entity\SortTrait;
 use Zentlix\MainBundle\Domain\Shared\Entity\Eventable;
-use Zentlix\MenuBundle\Application\Command\Item\CreateCommand;
-use Zentlix\MenuBundle\Application\Command\Item\UpdateCommand;
+use Zentlix\MenuBundle\Infrastructure\Item\Bus\CreateCommandInterface;
+use Zentlix\MenuBundle\Infrastructure\Item\Bus\UpdateCommandInterface;
 
 /**
  * @Annotation\Tree(type="nested")
@@ -52,13 +52,6 @@ class Item implements Eventable
 
     /** @Mapping\Column(type="boolean", options={"default": 0}) */
     private $blank;
-
-    /**
-     * @var Menu
-     * @Mapping\ManyToOne(targetEntity="Menu", inversedBy="items")
-     * @Mapping\JoinColumn(name="menu_id", referencedColumnName="id", nullable=false)
-     */
-    private $menu;
 
     /**
      * @Annotation\TreeLeft
@@ -101,12 +94,17 @@ class Item implements Eventable
     /** @Mapping\Column(type="string", length=64) */
     private $provider;
 
-    public function __construct(CreateCommand $command)
+    /** @Mapping\OneToOne(targetEntity="Zentlix\MenuBundle\Domain\Menu\Entity\Menu", mappedBy="root_item") */
+    private $menu;
+
+    public function __construct(CreateCommandInterface $command)
     {
+        $this->provider = $command->getProvider();
+
         $this->setValuesFromCommands($command);
     }
 
-    public function update(UpdateCommand $command)
+    public function update(UpdateCommandInterface $command)
     {
         $this->setValuesFromCommands($command);
     }
@@ -141,17 +139,12 @@ class Item implements Eventable
         return $this->depth;
     }
 
-    public function getMenu(): Menu
-    {
-        return $this->menu;
-    }
-
     public function getRoot(): Item
     {
         return $this->root;
     }
 
-    public function getParent(): ?self
+    public function getParent(): self
     {
         return $this->parent;
     }
@@ -166,36 +159,37 @@ class Item implements Eventable
         return $this->blank;
     }
 
-    public function asArray(): array
+    public function getChildrens()
     {
-        return [
-            'title'       => $this->title,
-            'url'         => $this->url,
-            'sort'        => $this->sort,
-            'is_category' => $this->is_category,
-            'blank'       => $this->blank,
-            'depth'       => $this->depth,
-            'entity_id'   => $this->entity_id,
-            'menu_id'     => $this->menu->getId(),
-            'parent'      => $this->parent,
-            'provider'    => $this->provider
-        ];
+        return $this->children ?? [];
+    }
+
+    public function getMenu(): Menu
+    {
+        if($this->getRoot()->getId() === $this->getId()) {
+            return $this->menu;
+        }
+
+        return $this->getRoot()->getMenu();
+    }
+
+    public function getLevel(): int
+    {
+        return $this->level;
     }
 
     /**
-     * @param CreateCommand|UpdateCommand $command
+     * @param CreateCommandInterface|UpdateCommandInterface $command
      */
     private function setValuesFromCommands($command): void
     {
-        $this->title = $command->title;
-        $this->url = $command->url;
-        $this->sort = $command->sort;
-        $this->is_category = $command->is_category;
-        $this->blank = $command->blank;
-        $this->depth = $command->depth;
-        $this->entity_id = $command->entity_id;
-        $this->menu = $command->getMenu();
-        $this->parent = $command->parent;
-        $this->provider = $command->provider;
+        $this->title       = $command->getTitle();
+        $this->url         = $command->getUrl();
+        $this->sort        = $command->getSort();
+        $this->is_category = $command->isCategory();
+        $this->blank       = $command->isBlank();
+        $this->depth       = $command->getDepth();
+        $this->entity_id   = $command->getEntityId();
+        $this->parent      = $command->getParent();
     }
 }

@@ -27,12 +27,12 @@ This bundle is part of Zentlix CMS. Currently in development, please do not use 
 - Создать меню в административной панели, добавить пункты меню, скопировать "Символьный код".
 - В шаблоне сайта разместить виджет:
 ```twig
-    {{ menuWidget('symbol_code') }}
+    {{ menu_widget('symbol_code') }}
 ```
 
 - Вторым параметром можно передать имя шаблона:
 ```twig
-    {{ menuWidget('symbol_code', 'main_menu') }}
+    {{ menu_widget('symbol_code', 'main_menu') }}
 ```
 - Шаблон должен быть создан в шаблоне сайта и прописан в конфигурационном файле шаблона templates/шаблон/src/config.yaml:
 ```yaml
@@ -41,5 +41,5 @@ This bundle is part of Zentlix CMS. Currently in development, please do not use 
 ```
 - Для вывода заголовка меню используется виджет:
 ```twig
-    {{ menuTitleWidget('symbol_code') }}
+    {{ menu_title_widget('symbol_code') }}
 ```

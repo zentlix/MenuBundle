@@ -12,12 +12,11 @@ declare(strict_types=1);
 
 namespace Zentlix\MenuBundle\Domain\Menu\Entity;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\ORM\Mapping;
 use Gedmo\Mapping\Annotation\Slug;
+use Zentlix\MainBundle\Domain\Shared\Entity\Eventable;
 use Zentlix\MenuBundle\Application\Command\Menu\CreateCommand;
 use Zentlix\MenuBundle\Application\Command\Menu\UpdateCommand;
-use Zentlix\MainBundle\Domain\Shared\Entity\Eventable;
 
 /**
  * @Mapping\Entity(repositoryClass="Zentlix\MenuBundle\Domain\Menu\Repository\MenuRepository")
@@ -47,15 +46,13 @@ class Menu implements Eventable
     private $description;
 
     /**
-     * @Mapping\OneToMany(targetEntity="Item", mappedBy="menu")
-     * @Mapping\OrderBy({"sort" = "ASC"})
+     * @Mapping\OneToOne(targetEntity="Zentlix\MenuBundle\Domain\Menu\Entity\Item", inversedBy="menu")
+     * @Mapping\JoinColumn(name="root_item_id", referencedColumnName="id")
      */
-    private $items;
+    private ?Item $root_item;
 
     public function __construct(CreateCommand $command)
     {
-        $this->items = new ArrayCollection();
-
         $this->setValuesFromCommands($command);
     }
 
@@ -84,9 +81,16 @@ class Menu implements Eventable
         return $this->code;
     }
 
-    public function getItems()
+    public function setRootItem(Item $item): self
     {
-        return $this->items;
+        $this->root_item = $item;
+
+        return $this;
+    }
+
+    public function getRootItem(): Item
+    {
+        return $this->root_item;
     }
 
     public function isCodeEqual(string $code): bool

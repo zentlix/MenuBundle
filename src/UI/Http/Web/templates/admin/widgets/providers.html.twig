@@ -1,0 +1,21 @@
+<div class="accordion providers-wrapper" id="menu-providers">
+    {% for provider in providers %}
+        <div class="card mb-0">
+            <div class="card-header" id="heading-{{ provider.type }}">
+                <div class="mb-0 provider-title">
+                    <a data-toggle="collapse" href="#{{ provider.type }}" aria-expanded="true" aria-controls="{{ provider.type }}" role="button" class="accordion-toggle">
+                        <i class="c-icon c-icon-2xl cil-chevron-bottom float-right"></i>
+                        {{ provider.title | trans }}
+                    </a>
+                </div>
+            </div>
+            <div class="collapse" id="{{ provider.type }}" aria-labelledby="heading-{{ provider.type }}" data-parent="#menu-providers">
+                <div class="card-body">
+                    {% autoescape %}
+                        {{ provider.createForm(menu) | raw }}
+                    {% endautoescape %}
+                </div>
+            </div>
+        </div>
+    {% endfor %}
+</div>

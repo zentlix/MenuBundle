@@ -32,9 +32,6 @@ class CreateForm extends AbstractForm
     public function buildForm(FormBuilderInterface $builder, array $options): void
     {
         $builder
-            ->add('info', Type\NoticeType::class, [
-                'data' => 'zentlix_menu.info'
-            ])
             ->add('title', Type\TextType::class, [
                 'label' => 'zentlix_main.title'
             ])
@@ -52,10 +49,6 @@ class CreateForm extends AbstractForm
 
     public function configureOptions(OptionsResolver $resolver): void
     {
-        $resolver->setDefaults([
-            'data_class' => CreateCommand::class,
-            'label'      => 'zentlix_menu.menu.create.process',
-            'form'       => self::SIMPLE_FORM
-        ]);
+        $resolver->setDefaults(['data_class' => CreateCommand::class]);
     }
 }

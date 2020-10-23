@@ -15,6 +15,7 @@ namespace Zentlix\MenuBundle\UI\Http\Web\Widget;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 use Zentlix\MenuBundle\Domain\Menu\Service\Menu;
+use function is_null;
 
 class MenuTitle extends AbstractExtension
 {
@@ -28,7 +29,7 @@ class MenuTitle extends AbstractExtension
     public function getFunctions(): array
     {
         return [
-            new TwigFunction('menuTitleWidget', [$this, 'getMenuTitle'], ['needs_environment' => false, 'is_safe' => ['html']]),
+            new TwigFunction('menu_title_widget', [$this, 'getMenuTitle'], ['needs_environment' => false, 'is_safe' => ['html']]),
         ];
     }
 

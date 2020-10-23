@@ -15,11 +15,8 @@ zentlix_menu:
     parent:    "Родительский пункт меню"
     url_type:  "Произвольный URL адрес"
     create:
-      action:  "Добавить пункт меню"
-      process: "Добавление пункта меню"
       success: "Пункт меню успешно добавлен."
     update:
-      process: "Редактирование пункта меню"
       success: "Пункт меню успешно изменен."
     delete:
       action:       "Удалить пункт меню"
@@ -44,5 +41,6 @@ zentlix_menu:
 
   not_exist:          "Меню c id %s не найдено."
   provider_not_found: "Провайдер меню с id %s не найден."
+  root_level:         "Корневой уровень"
   target_blank:       "Открывать в новой вкладке"
   view:               "Просмотр меню"

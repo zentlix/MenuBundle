@@ -5,7 +5,7 @@
         http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <parameters>
-        <parameter key="menu_template">@MenuBundle/widgets/menu/default.html.twig</parameter>
+        <parameter key="zentlix_menu_template">@MenuBundle/widgets/menu/default.html.twig</parameter>
     </parameters>
 
     <services>
@@ -15,20 +15,20 @@
         <service id="Zentlix\MenuBundle\Domain\Menu\Service\Providers" alias="zentlix_menu.service.providers"/>
 
         <service id="zentlix_menu.service.menu" class="Zentlix\MenuBundle\Domain\Menu\Service\Menu">
-            <argument type="service" id="router"/>
-            <argument type="service" id="translator"/>
             <argument type="service" id="zentlix_menu.service.providers"/>
             <argument type="service" id="Zentlix\MenuBundle\Domain\Menu\Repository\MenuRepository"/>
             <argument type="service" id="Zentlix\MenuBundle\Domain\Menu\Repository\ItemRepository"/>
         </service>
         <service id="Zentlix\MenuBundle\Domain\Menu\Service\Menu" alias="zentlix_menu.service.menu"/>
 
-        <service id="zentlix_menu.menu_bundle" class="Zentlix\MenuBundle\MenuBundle">
-            <tag name="zentlix_bundle"/>
+        <service id="zentlix_menu.service.url_menu_provider" class="Zentlix\MenuBundle\Domain\Menu\Service\UrlMenuProvider">
+            <argument type="service" id="form.factory"/>
+            <argument type="service" id="twig"/>
+            <tag name="zentlix.menu.provider"/>
         </service>
 
-        <service id="zentlix_menu.service.url_menu_provider" class="Zentlix\MenuBundle\Domain\Menu\Service\UrlMenuProvider">
-            <tag name="zentlix.menu.provider"/>
+        <service id="zentlix_menu.menu_bundle" class="Zentlix\MenuBundle\MenuBundle">
+            <tag name="zentlix_bundle"/>
         </service>
     </services>
 </container>

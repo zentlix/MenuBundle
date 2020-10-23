@@ -13,10 +13,11 @@ declare(strict_types=1);
 namespace Zentlix\MenuBundle\Domain\Menu\Repository;
 
 use Doctrine\ORM\EntityManagerInterface;
-use Zentlix\MenuBundle\Domain\Menu\Entity\Item;
+use Doctrine\ORM\Query;
 use Zentlix\MainBundle\Domain\Shared\Repository\AbstractTreeRepository;
 use Zentlix\MainBundle\Domain\Shared\Repository\GetTrait;
 use Zentlix\MainBundle\Domain\Shared\Repository\MaxSortTrait;
+use Zentlix\MenuBundle\Domain\Menu\Entity\Item;
 
 /**
  * @method Item|null find($id, $lockMode = null, $lockVersion = null)
@@ -32,26 +33,28 @@ class ItemRepository extends AbstractTreeRepository
         parent::__construct($manager, $manager->getClassMetadata(Item::class));
     }
 
-    public function assocByMenuId(int $menuId): array
+    public function assocByRootId(int $rootId): array
     {
         return array_column(
             $this->createQueryBuilder('a')
                 ->select('a.id', 'a.title')
-                ->andWhere('a.menu = :menuId')
-                ->setParameter(':menuId', $menuId)
+                ->andWhere('a.root = :rootId')
+                ->setParameter(':rootId', $rootId)
                 ->orderBy('a.sort')
                 ->getQuery()
                 ->execute(), 'id', 'title'
         );
     }
 
-    public function getMenuTree(int $menuId)
+    public function getMenuTree(int $rootId)
     {
         return $this->createQueryBuilder('item', 'item.id')
-            ->andWhere('item.menu = :menuId')
-            ->setParameter('menuId', $menuId)
+            ->andWhere('item.root = :rootId')
+            ->setParameter('rootId', $rootId)
+            ->andWhere('item.level > 0')
             ->addOrderBy('item.root, item.lft', 'asc')
             ->getQuery()
+            ->setHint(Query::HINT_INCLUDE_META_COLUMNS, true)
             ->getArrayResult();
     }
 }

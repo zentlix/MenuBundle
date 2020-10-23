@@ -14,7 +14,7 @@ namespace Zentlix\MenuBundle\Application\Command\Menu;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Zentlix\MainBundle\Application\Command\CommandHandlerInterface;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandHandlerInterface;
 use Zentlix\MenuBundle\Domain\Menu\Event\Menu\BeforeCreate;
 use Zentlix\MenuBundle\Domain\Menu\Event\Menu\AfterCreate;
 use Zentlix\MenuBundle\Domain\Menu\Entity\Menu;

@@ -5,6 +5,11 @@
         http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
+        <service id="Zentlix\MenuBundle\EventSubscriber\MenuSubscriber">
+            <argument type="service" id="doctrine.orm.entity_manager"/>
+            <argument type="service" id="zentlix_main.command_bus"/>
+            <tag name="kernel.event_subscriber"/>
+        </service>
         <service id="Zentlix\MenuBundle\EventSubscriber\SidebarSubscriber">
             <tag name="kernel.event_subscriber"/>
         </service>

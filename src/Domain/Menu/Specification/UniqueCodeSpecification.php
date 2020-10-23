@@ -30,7 +30,7 @@ final class UniqueCodeSpecification
     public function isUnique(string $code): void
     {
         if($this->menuRepository->hasByCode($code)) {
-            throw new NonUniqueResultException($this->translator->trans('zentlix_menu.already_exist'));
+            throw new NonUniqueResultException(sprintf($this->translator->trans('zentlix_menu.already_exist'), $code));
         }
     }
 

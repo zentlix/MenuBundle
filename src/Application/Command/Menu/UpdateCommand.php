@@ -12,20 +12,16 @@ declare(strict_types=1);
 
 namespace Zentlix\MenuBundle\Application\Command\Menu;
 
-use Zentlix\MainBundle\Application\Command\UpdateCommandInterface;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\UpdateCommandInterface;
 use Zentlix\MenuBundle\Domain\Menu\Entity\Menu;
-use Zentlix\MenuBundle\Domain\Menu\Service\Menu as MenuService;
 
 class UpdateCommand extends Command implements UpdateCommandInterface
 {
-    public array $items = [];
-
-    public function __construct(Menu $menu, MenuService $menuService)
+    public function __construct(Menu $menu)
     {
-        $this->entity = $menu;
-        $this->title = $menu->getTitle();
+        $this->entity      = $menu;
+        $this->title       = $menu->getTitle();
         $this->description = $menu->getDescription();
-        $this->code = $menu->getCode();
-        $this->items = $menuService->getMenuItemsForDataTable($menu);
+        $this->code        = $menu->getCode();
     }
 }

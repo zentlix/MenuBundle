@@ -13,8 +13,8 @@ declare(strict_types=1);
 namespace Zentlix\MenuBundle\Application\Command\Menu;
 
 use Symfony\Component\Validator\Constraints;
-use Zentlix\MainBundle\Application\Command\DynamicPropertyCommand;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandInterface;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\DynamicPropertyCommand;
 use Zentlix\MenuBundle\Domain\Menu\Entity\Menu;
 
 class Command extends DynamicPropertyCommand implements CommandInterface

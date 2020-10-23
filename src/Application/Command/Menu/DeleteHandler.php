@@ -14,7 +14,7 @@ namespace Zentlix\MenuBundle\Application\Command\Menu;
 
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
-use Zentlix\MainBundle\Application\Command\CommandHandlerInterface;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandHandlerInterface;
 use Zentlix\MenuBundle\Domain\Menu\Event\Menu\AfterDelete;
 use Zentlix\MenuBundle\Domain\Menu\Event\Menu\BeforeDelete;
 use Zentlix\MenuBundle\Domain\Menu\Service\Cache;
@@ -36,15 +36,16 @@ class DeleteHandler implements CommandHandlerInterface
 
         $this->eventDispatcher->dispatch(new BeforeDelete($command));
 
-        foreach ($command->menu->getItems()->getValues() as $item) {
-            $this->entityManager->remove($item);
-        }
+        $rootItem = $command->menu->getRootItem();
 
         Cache::clearMenu($command->menu->getCode());
         Cache::clearMenuTree($command->menu->getCode());
 
         $this->entityManager->remove($command->menu);
         $this->entityManager->flush();
+        $this->entityManager->remove($rootItem);
+        $this->entityManager->flush();
+
         $this->eventDispatcher->dispatch(new AfterDelete($menuId));
     }
 }

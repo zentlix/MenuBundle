@@ -5,10 +5,6 @@
         http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <service id="zentlix_menu.exist_entity_specification"
-                 class="Zentlix\MenuBundle\Domain\Menu\Specification\ExistEntitySpecification">
-            <argument type="service" id="translator"/>
-        </service>
         <service id="zentlix_menu.exist_item_specification"
                  class="Zentlix\MenuBundle\Domain\Menu\Specification\ExistItemSpecification">
             <argument type="service" id="Zentlix\MenuBundle\Domain\Menu\Repository\ItemRepository"/>

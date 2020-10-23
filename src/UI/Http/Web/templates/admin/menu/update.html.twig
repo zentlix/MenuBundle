@@ -1,0 +1,71 @@
+{% extends '@MainBundle/admin/layouts/base.html.twig' %}
+
+{% block title %}{{ 'zentlix_menu.menu.update.process' | trans }}{% endblock %}
+
+{% block breadcrumbs %}
+    <li class="breadcrumb-item"><a href="{{ path('admin.index') }}">{{ 'zentlix_main.control_panel' | trans }}</a></li>
+    <li class="breadcrumb-item active">{{ 'zentlix_menu.menu.update.process' | trans }}</li>
+{% endblock %}
+
+{% block header_scripts %}
+    <link href="{{ admin_asset('css/menu.css') }}" rel="stylesheet">
+{% endblock %}
+{% block footer_scripts %}
+    <script src="{{ admin_asset('js/menu.js') }}"></script>
+{% endblock %}
+
+{% block body %}
+    <div class="row">
+        <div class="card w-100">
+            <div class="card-header">
+                {{ 'zentlix_menu.menu.update.process' | trans }}
+                {% include '@MainBundle/admin/partials/delete_confirmation.html.twig' with {
+                    'title': 'zentlix_menu.menu.delete.action',
+                    'confirmation': 'zentlix_menu.menu.delete.confirmation',
+                    'path': path('admin.menu.delete', {'id': menu.id()})
+                } %}
+            </div>
+            <div class="card-body">
+                <div class="nav-tabs border-bottom-0">
+                    <ul class="nav nav-tabs" role="tablist">
+                        <li class="nav-item">
+                            <a class="nav-link {% if app.request.get('items') != 1 %}active{% endif %}"
+                               data-toggle="tab" href="#main" role="tab" aria-controls="{{ 'zentlix_main.main' | trans }}"
+                            >
+                                {{ 'zentlix_main.main' | trans }}
+                            </a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link {% if app.request.get('items') == 1 %}active{% endif %}" data-toggle="tab" href="#items" role="tab" aria-controls="{{ 'zentlix_menu.item.items' | trans }}">
+                                {{ 'zentlix_menu.item.items' | trans }}
+                            </a>
+                        </li>
+                    </ul>
+                    <div class="tab-content pt-4">
+                        <div class="tab-pane {% if app.request.get('items') != 1 %}active{% endif %}" id="main" role="tabpanel">
+                            {{ form_start(form) }}
+                                {{ form_widget(form) }}
+                            {{ form_end(form) }}
+                        </div>
+                        <div class="tab-pane {% if app.request.get('items') == 1 %}active{% endif %}" id="items" role="tabpanel">
+                            <div class="row">
+                                <div class="col-lg-3 col-md-4 col-sm-12">
+                                    {{ admin_menu_providers(menu) }}
+                                </div>
+                                <div class="col-lg-9 col-md-8 col-sm-12 pt-4 pt-md-0 menu-items">
+                                    {{ admin_menu_items(menu) }}
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-footer">
+                <button class="btn btn-sm btn-primary menu-submit" type="submit">
+                    <i class="fa fa-dot-circle-o"></i> {{ 'zentlix_main.save' | trans }}
+                </button>
+                <a href="{{ path('admin.menu.list') }}" class="btn btn-sm btn-secondary" type="button">{{ 'zentlix_main.cancel' | trans }}</a>
+            </div>
+        </div>
+    </div>
+{% endblock %}

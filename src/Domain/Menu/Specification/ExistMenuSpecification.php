@@ -13,7 +13,7 @@ declare(strict_types=1);
 namespace Zentlix\MenuBundle\Domain\Menu\Specification;
 
 use Symfony\Contracts\Translation\TranslatorInterface;
-use Zentlix\MainBundle\Application\Query\NotFoundException;
+use Zentlix\MainBundle\Infrastructure\Share\Bus\NotFoundException;
 use Zentlix\MenuBundle\Domain\Menu\Repository\MenuRepository;
 use function is_null;
 

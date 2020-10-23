@@ -5,10 +5,9 @@
         http://symfony.com/schema/dic/services/services-1.0.xsd">
 
     <services>
-        <defaults public="false"/>
+        <defaults public="true"/>
         <service id="zentlix_menu.controller.admin.menu_controller"
-                 class="Zentlix\MenuBundle\UI\Http\Web\Controller\Admin\MenuController"
-                 public="true">
+                 class="Zentlix\MenuBundle\UI\Http\Web\Controller\Admin\MenuController">
             <argument type="service" id="translator"/>
             <argument type="service" id="security.csrf.token_manager"/>
             <argument type="service" id="zentlix_main.bundles"/>
@@ -17,9 +16,8 @@
             <tag name="controller.service_arguments"/>
         </service>
 
-        <service id="zentlix_menu.controller.admin.item_controller"
-                 class="Zentlix\MenuBundle\UI\Http\Web\Controller\Admin\ItemController"
-                 public="true">
+        <service id="zentlix_menu.controller.admin.url_controller"
+                 class="Zentlix\MenuBundle\UI\Http\Web\Controller\Admin\UrlController">
             <argument type="service" id="translator"/>
             <argument type="service" id="security.csrf.token_manager"/>
             <argument type="service" id="zentlix_main.bundles"/>
