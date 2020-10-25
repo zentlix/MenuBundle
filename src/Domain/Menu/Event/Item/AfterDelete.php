@@ -10,8 +10,8 @@
 
 declare(strict_types=1);
 
-namespace Zentlix\MenuBundle\Domain\Menu\Event\Item\Url;
+namespace Zentlix\MenuBundle\Domain\Menu\Event\Item;
 
-use Zentlix\MainBundle\Domain\Shared\Event\AbstractBeforeDelete;
+use Zentlix\MainBundle\Domain\Shared\Event\AbstractAfterDelete;
 
-final class BeforeDelete extends AbstractBeforeDelete {}
+final class AfterDelete extends AbstractAfterDelete {}

@@ -57,4 +57,9 @@ class ItemRepository extends AbstractTreeRepository
             ->setHint(Query::HINT_INCLUDE_META_COLUMNS, true)
             ->getArrayResult();
     }
+
+    public function findByEntityId($entityId): array
+    {
+        return $this->findBy(['entity_id' => $entityId]);
+    }
 }

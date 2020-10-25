@@ -15,8 +15,8 @@ namespace Zentlix\MenuBundle\Application\Command\Item\Url;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\EventDispatcher\EventDispatcherInterface;
 use Zentlix\MainBundle\Infrastructure\Share\Bus\CommandHandlerInterface;
-use Zentlix\MenuBundle\Domain\Menu\Event\Item\Url\AfterDelete;
-use Zentlix\MenuBundle\Domain\Menu\Event\Item\Url\BeforeDelete;
+use Zentlix\MenuBundle\Domain\Menu\Event\Item\AfterDelete;
+use Zentlix\MenuBundle\Domain\Menu\Event\Item\BeforeDelete;
 use Zentlix\MenuBundle\Domain\Menu\Service\Cache;
 
 class DeleteHandler implements CommandHandlerInterface

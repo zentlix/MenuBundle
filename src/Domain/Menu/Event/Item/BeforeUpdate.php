@@ -10,8 +10,8 @@
 
 declare(strict_types=1);
 
-namespace Zentlix\MenuBundle\Domain\Menu\Event\Item\Url;
+namespace Zentlix\MenuBundle\Domain\Menu\Event\Item;
 
-use Zentlix\MainBundle\Domain\Shared\Event\AbstractBeforeCreate;
+use Zentlix\MainBundle\Domain\Shared\Event\AbstractBeforeUpdate;
 
-final class BeforeCreate extends AbstractBeforeCreate {}
+final class BeforeUpdate extends AbstractBeforeUpdate {}
