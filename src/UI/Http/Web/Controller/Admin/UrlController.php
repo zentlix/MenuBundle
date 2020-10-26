@@ -27,37 +27,54 @@ class UrlController extends AbstractAdminController
 {
     public function create(Menu $menu, Request $request): Response
     {
-        $command = new CreateCommand($menu);
+        try {
+            $command = new CreateCommand($menu);
 
-        $this->createForm(CreateForm::class, $command)->handleRequest($request);
-        $this->exec($command);
+            $this->createForm(CreateForm::class, $command)->handleRequest($request);
+            $this->exec($command);
 
-        $this->addFlash('success', $this->translator->trans('zentlix_menu.item.create.success'));
+            $this->addFlash('success', $this->translator->trans('zentlix_menu.item.create.success'));
 
-        return $this->redirectToRoute('admin.menu.update', ['id' => $menu->getId(), 'items' => 1]);
+            return $this->redirectToRoute('admin.menu.update', ['id' => $menu->getId(), 'items' => 1]);
+        } catch (\Exception $exception) {
+            $this->addFlash('error', $exception->getMessage());
+
+            return $this->redirectToRoute('admin.menu.update', ['id' => $menu->getId(), 'items' => 1]);
+        }
     }
 
     public function update(Item $item, Request $request): Response
     {
-        $command = new UpdateCommand($item);
+        try {
+            $command = new UpdateCommand($item);
 
-        $this->createForm(UpdateForm::class, $command)->handleRequest($request);
-        $this->exec($command);
+            $this->createForm(UpdateForm::class, $command)->handleRequest($request);
+            $this->exec($command);
 
-        $this->addFlash('success', $this->translator->trans('zentlix_menu.item.update.success'));
+            $this->addFlash('success', $this->translator->trans('zentlix_menu.item.update.success'));
 
-        return $this->redirectToRoute('admin.menu.update', ['id' => $item->getMenu()->getId(), 'items' => 1]);
+            return $this->redirectToRoute('admin.menu.update', ['id' => $item->getMenu()->getId(), 'items' => 1]);
+        } catch (\Exception $exception) {
+            $this->addFlash('error', $exception->getMessage());
+
+            return $this->redirectToRoute('admin.menu.update', ['id' => $item->getMenu()->getId(), 'items' => 1]);
+        }
     }
 
     public function delete(Item $item): Response
     {
-        $menuId = $item->getMenu()->getId();
+        try {
+            $menuId = $item->getMenu()->getId();
+            $command = new DeleteCommand($item);
 
-        $command = new DeleteCommand($item);
-        $this->exec($command);
+            $this->exec($command);
+            $this->addFlash('success', $this->translator->trans('zentlix_menu.item.delete.success'));
 
-        $this->addFlash('success', $this->translator->trans('zentlix_menu.item.delete.success'));
+            return $this->redirectToRoute('admin.menu.update', ['id' => $menuId, 'items' => 1]);
+        } catch (\Exception $exception) {
+            $this->addFlash('error', $exception->getMessage());
 
-        return $this->redirectToRoute('admin.menu.update', ['id' => $menuId, 'items' => 1]);
+            return $this->redirectToRoute('admin.menu.update', ['id' => $menuId, 'items' => 1]);
+        }
     }
 }
