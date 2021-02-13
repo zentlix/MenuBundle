@@ -8,9 +8,7 @@
         <defaults public="true"/>
         <service id="zentlix_menu.controller.admin.menu_controller"
                  class="Zentlix\MenuBundle\UI\Http\Web\Controller\Admin\MenuController">
-            <argument type="service" id="translator"/>
-            <argument type="service" id="security.csrf.token_manager"/>
-            <argument type="service" id="zentlix_main.bundles"/>
+            <argument type="service" id="zentlix_main.bundles" />
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
             <tag name="controller.service_arguments"/>
@@ -18,9 +16,7 @@
 
         <service id="zentlix_menu.controller.admin.url_controller"
                  class="Zentlix\MenuBundle\UI\Http\Web\Controller\Admin\UrlController">
-            <argument type="service" id="translator"/>
-            <argument type="service" id="security.csrf.token_manager"/>
-            <argument type="service" id="zentlix_main.bundles"/>
+            <argument type="service" id="zentlix_main.bundles" />
             <argument type="service" id="zentlix_main.command_bus"/>
             <argument type="service" id="zentlix_main.query_bus"/>
             <tag name="controller.service_arguments"/>

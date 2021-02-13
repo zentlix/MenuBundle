@@ -33,7 +33,7 @@ class UrlController extends AbstractAdminController
             $this->createForm(CreateForm::class, $command)->handleRequest($request);
             $this->exec($command);
 
-            $this->addFlash('success', $this->translator->trans('zentlix_menu.item.create.success'));
+            $this->addFlash('success', 'zentlix_menu.item.create.success');
 
             return $this->redirectToRoute('admin.menu.update', ['id' => $menu->getId(), 'items' => 1]);
         } catch (\Exception $exception) {
@@ -51,7 +51,7 @@ class UrlController extends AbstractAdminController
             $this->createForm(UpdateForm::class, $command)->handleRequest($request);
             $this->exec($command);
 
-            $this->addFlash('success', $this->translator->trans('zentlix_menu.item.update.success'));
+            $this->addFlash('success', 'zentlix_menu.item.update.success');
 
             return $this->redirectToRoute('admin.menu.update', ['id' => $item->getMenu()->getId(), 'items' => 1]);
         } catch (\Exception $exception) {
@@ -68,7 +68,7 @@ class UrlController extends AbstractAdminController
             $command = new DeleteCommand($item);
 
             $this->exec($command);
-            $this->addFlash('success', $this->translator->trans('zentlix_menu.item.delete.success'));
+            $this->addFlash('success', 'zentlix_menu.item.delete.success');
 
             return $this->redirectToRoute('admin.menu.update', ['id' => $menuId, 'items' => 1]);
         } catch (\Exception $exception) {
